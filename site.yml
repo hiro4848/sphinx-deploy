@@ -1,0 +1,7 @@
+---
+- name: Install Elasticsearch nodes
+  hosts: elasticsearch 
+  sudo: yes
+  roles:
+    - elasticsearch 
+
