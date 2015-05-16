@@ -5,3 +5,19 @@
   roles:
     - elasticsearch 
 
+- name: Install Logstash 
+  hosts: logstash
+  sudo: yes
+  roles:
+    - logstash
+
+- name: Install PostgreSQL
+  hosts: postgres
+  sudo: yes
+  roles:
+
+
+- name: Install Redis
+  hosts: redis
+  sudo: yes
+  roles:
