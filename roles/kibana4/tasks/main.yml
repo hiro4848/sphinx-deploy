@@ -1,0 +1,51 @@
+---
+# tasks file for kibana4
+- name: validating kibana4 selected version
+  assert:
+    that: "'{{ kibana4_version }}'.find('4.') == 0"
+
+- name: determining kibana4 facts
+  set_fact:
+    kibana4_artifact: "kibana-{{ kibana4_version }}-linux-{% if ansible_architecture == 'x86_64' %}x64{% else %}x86{% endif %}"
+
+- name: downloading kibana4
+  get_url:
+    url: https://download.elastic.co/kibana/kibana/{{ kibana4_artifact }}.tar.gz
+    dest: /var/tmp/{{ kibana4_artifact }}.tar.gz
+
+- name: extracting kibana4
+  unarchive:
+    src: /var/tmp/{{ kibana4_artifact }}.tar.gz
+    copy: no
+    dest: /opt
+    creates: /opt/{{ kibana4_artifact }}
+
+- name: linking to /opt/kibana
+  file:
+     src: /opt/{{ kibana4_artifact }}
+     dest: /opt/kibana
+     state: link
+
+- name: downloading kibana4 init script
+  get_url:
+    url: https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/bce61d85643c2dcdfbc2728c55a41dab444dca20/kibana4
+    dest: /etc/init.d/kibana4
+    mode: 0755
+    owner: root
+    group: root
+
+- name: setting kibana4 to autostart
+  service:
+    name: kibana4
+    enabled: yes
+  notify:
+    - restart kibana4
+
+- name: configuring kibana4
+  lineinfile:
+    dest: /opt/kibana/config/kibana.yml
+    regexp: '^\s*#?\s*{{ item.key }}\s*:'
+    line: '{{ item.key }}: {{ item.value }}'
+  with_dict: kibana4_settings
+  notify:
+    - restart kibana4

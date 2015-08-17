@@ -1,0 +1,9 @@
+---
+postgresql_databases:
+  - name: ninja
+postgresql_users:
+  - name: postgres
+    pass: 1234567
+postgresql_user_privileges:
+  - name: postgres
+    db: ninja

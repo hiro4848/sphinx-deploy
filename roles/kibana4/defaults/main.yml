@@ -1,0 +1,6 @@
+---
+kibana4_version: 4.0.2
+kibana4_autostart: yes
+
+kibana4_settings:
+   "elasticsearch_url": "http://127.0.0.1:9200"

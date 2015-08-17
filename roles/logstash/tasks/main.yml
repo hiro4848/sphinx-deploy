@@ -19,7 +19,6 @@
 - name: Install Logstash
   apt: pkg=logstash update_cache=yes state=latest
 
-
 - name: Logstash set heap size
   action: >
      lineinfile dest=/etc/init.d/logstash state=present
@@ -31,6 +30,19 @@
   template: src=logstash.conf dest=/etc/logstash/conf.d/logstash.conf
   notify: Restart Logstash
 
+- name: Download the latest GeoIP database
+  command: "{{item}}"
+  with_items:
+    - curl -o /etc/logstash/GeoLiteCity.dat.gz "http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz"
+    - gunzip -f /etc/logstash/GeoLiteCity.dat.gz
+
+- name: Install Geoip logstash plugin
+  command: /opt/logstash/bin/plugin install logstash-filter-geoip
+  notify: Restart Logstash
+
+- name: Install Sphinx logstash plugin
+  command: /opt/logstash/bin/plugin install logstash-filter-sphinx
+  notify: Restart Logstash
 
 - name: Start Logstash
   service: name=logstash state=started enabled=yes

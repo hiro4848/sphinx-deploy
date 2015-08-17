@@ -23,5 +23,4 @@ elasticsearch:
 
 
 # Auto-detect IP address to bind on based on the configured network interface
-bind_iface: "{{ hostvars[inventory_hostname].get('main_iface', 'eth0') }}"
-elasticsearch_bind_ip: "{{ hostvars[inventory_hostname]['ansible_' + bind_iface ].ipv4.address }}"
+elasticsearch_bind_ip: "0.0.0.0"

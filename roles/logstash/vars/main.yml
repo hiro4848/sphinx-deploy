@@ -10,21 +10,21 @@ input:
 
 filter:
     sphinx:
-        pg_host: "{{ hostvars[groups['postgres']]['ansible_eth0']['ipv4']['address'] }}"
+        pg_host: "{{ hostvars[groups['postgres'][0]].ansible_eth0.ipv4.address }}"
         pg_port: 5432
         pg_user: "postgres"
         pg_password: "1234567"
         pg_dbname: "ninja"
 
-        redis_host: "{{ hostvars[groups['redis']]['ansible_eth0']['ipv4']['address'] }}"
+        redis_host: "{{ hostvars[groups['redis'][0]].ansible_eth0.ipv4.address }}"
         redis_port: 6379
         redis_db: "ninja"
 
 output:
     elasticsearch:
-        host: "{{ hostvars[groups['elasticsearch']]['ansible_eth0']['ipv4']['address'] }}"
+        host: "{{ hostvars[groups['elasticsearch'][0]].ansible_eth0.ipv4.address }}"
         port: 9200
         protocol: "http"    
-
+        index: "sphinx"
 
 

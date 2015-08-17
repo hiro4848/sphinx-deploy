@@ -1,0 +1,10 @@
+[elasticsearch]
+ec2-54-87-98-75.compute-1.amazonaws.com
+[kibana4]
+ec2-54-87-98-75.compute-1.amazonaws.com
+[logstash]
+ec2-54-87-98-75.compute-1.amazonaws.com
+[postgres]
+ec2-54-87-98-75.compute-1.amazonaws.com
+[redis]
+ec2-54-87-98-75.compute-1.amazonaws.com

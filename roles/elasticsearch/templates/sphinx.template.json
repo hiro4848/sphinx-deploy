@@ -1,6 +1,6 @@
 {
-    "logstash": {
-        "template": "logstash-*",
+    "sphinx": {
+        "template": "sphinx",
         "mappings": {
             "_default_": {
                 "_source": {

@@ -1,23 +1,39 @@
 ---
-- name: Install Elasticsearch nodes
-  hosts: elasticsearch 
-  sudo: yes
-  roles:
-    - elasticsearch 
-
 - name: Install Logstash 
   hosts: logstash
   sudo: yes
   roles:
     - logstash
+  tags:
+    - elk
+
+- name: Install Elasticsearch nodes
+  hosts: elasticsearch 
+  sudo: yes
+  roles:
+    - elasticsearch 
+  tags:
+    - elk
+    - elasticsearch
+
+- name: Install Kibana4
+  hosts: kibana4
+  sudo: yes
+  roles:
+    - kibana4
+  tags:
+    -elk
 
 - name: Install PostgreSQL
   hosts: postgres
   sudo: yes
   roles:
+    - postgresql
 
 
 - name: Install Redis
   hosts: redis
   sudo: yes
   roles:
+    - redis
+

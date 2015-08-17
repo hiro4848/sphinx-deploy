@@ -33,15 +33,15 @@
   service: name=elasticsearch state=started enabled=yes
 
 - name: Wait for ES to start
-  wait_for: host={{ elasticsearch_bind_ip }} port=9200
+  wait_for: host=127.0.0.1 port=9200
 
-- name: Copy ES template file for Sphinx 
-  template: src=sphinx.template.json dest=/tmp/sphinx.template.json
-  register: es_template
+- name: Prepare template directory
+  file: path=/etc/elasticsearch/templates state=directory owner=root group=root mode=0755
 
 - name: Load template
-  shell: >
-      chdir=/tmp
-      curl -XPUT 'http://{{elasticsearch_bind_ip}}:9200/_template/sphinx' -d @sphinx.template.json
-  when: es_template.changed
+  template: src=sphinx.template.json dest=/etc/elasticsearch/templates/sphinx.json
 
+
+- name: Install the 'head' plugin
+  command: "/usr/share/elasticsearch/bin/plugin -i mobz/elasticsearch-head"
+  ignore_errors: yes
