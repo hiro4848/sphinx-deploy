@@ -18,7 +18,7 @@ filter:
 
         redis_host: "{{ hostvars[groups['redis'][0]].ansible_eth0.ipv4.address }}"
         redis_port: 6379
-        redis_db: "ninja"
+	redis_record_db: 15
 
 output:
     elasticsearch:
